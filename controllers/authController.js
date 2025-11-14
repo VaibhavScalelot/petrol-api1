@@ -4,6 +4,8 @@ const User = require("../models/User");
 
 exports.registerUser = async (req, res) => {
   try {
+    console.log("Register API Hit:", req.body);  // <<== Add this
+
     const { name, email, password } = req.body;
     if (!name || !email || !password)
       return res.status(400).json({ message: "Please fill all fields" });
@@ -20,12 +22,15 @@ exports.registerUser = async (req, res) => {
 
     res.json({ token, user });
   } catch (err) {
+    console.error("REGISTER ERROR:", err);   // <<== REAL ERROR SHOW
     res.status(500).json({ message: "Server error" });
   }
 };
 
 exports.loginUser = async (req, res) => {
   try {
+    console.log("LOGIN API Hit:", req.body); // <<== Add this
+
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
@@ -38,6 +43,7 @@ exports.loginUser = async (req, res) => {
 
     res.json({ token, user });
   } catch (err) {
+    console.error("LOGIN ERROR:", err);  // <<== REAL ERROR SHOW
     res.status(500).json({ message: "Server error" });
   }
 };
